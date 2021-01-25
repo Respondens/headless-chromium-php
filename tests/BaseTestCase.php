@@ -15,7 +15,7 @@ use PHPUnit\Framework\TestCase;
 
 class BaseTestCase extends TestCase
 {
-    protected static function sitePath(string $file): string
+    protected static function sitePath($file)
     {
         return 'file://' . realpath(__DIR__ . '/resources/static-web/' . $file);
     }

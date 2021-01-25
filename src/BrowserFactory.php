@@ -23,10 +23,10 @@ class BrowserFactory
 {
     protected $chromeBinary;
 
-    public function __construct(string $chromeBinary = null)
+    public function __construct($chromeBinary = null)
     {
         // auto guess chrome binary
-        $this->chromeBinary = $chromeBinary ?? ($_SERVER['CHROME_PATH'] ?? 'chrome');
+        $this->chromeBinary = isset($chromeBinary) ? $chromeBinary : (isset($_SERVER['CHROME_PATH']) ? $_SERVER['CHROME_PATH'] : 'chrome');
     }
 
     /**
@@ -49,7 +49,7 @@ class BrowserFactory
      *
      * @return ProcessAwareBrowser a Browser instance to interact with the new chrome process
      */
-    public function createBrowser(array $options = []): ProcessAwareBrowser
+    public function createBrowser(array $options = [])
     {
 
         // create logger from options
@@ -123,7 +123,7 @@ class BrowserFactory
      * @return Browser
      * @throws BrowserConnectionFailed
      */
-    public static function connectToBrowser(string $uri, array $options = []): Browser
+    public static function connectToBrowser($uri, array $options = [])
     {
         $logger = self::createLogger($options);
 
@@ -132,7 +132,7 @@ class BrowserFactory
         }
 
         // connect to browser
-        $connection = new Connection($uri, $logger, $options['sendSyncDefaultTimeout'] ?? 5000);
+        $connection = new Connection($uri, $logger, isset($options['sendSyncDefaultTimeout']) ? $options['sendSyncDefaultTimeout'] : 5000);
 
         // try to connect
         try {
@@ -162,7 +162,7 @@ class BrowserFactory
     private static function createLogger($options)
     {
         // prepare logger
-        $logger = $options['debugLogger'] ?? null;
+        $logger = isset($options['debugLogger']) ? $options['debugLogger'] : null;
 
         // create logger from string name or resource
         if (is_string($logger) || is_resource($logger)) {

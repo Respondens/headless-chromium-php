@@ -33,7 +33,7 @@ abstract class AbstractBinaryInput
     /**
      * @return ResponseReader
      */
-    public function getResponseReader(): ResponseReader
+    public function getResponseReader()
     {
         return $this->responseReader;
     }
@@ -42,7 +42,7 @@ abstract class AbstractBinaryInput
      * Get base64 representation of the file
      * @return mixed
      */
-    public function getBase64(int $timeout = null)
+    public function getBase64($timeout = null)
     {
         $response = $this->responseReader->waitForResponse($timeout);
 
@@ -59,7 +59,7 @@ abstract class AbstractBinaryInput
      * @throws FilesystemException
      * @throws ScreenshotFailed
      */
-    public function saveToFile(string $path, int $timeout = 5000)
+    public function saveToFile($path, $timeout = 5000)
     {
         $response = $this->responseReader->waitForResponse($timeout);
 
@@ -102,5 +102,5 @@ abstract class AbstractBinaryInput
      * @internal
      * @return \Exception
      */
-    abstract protected function getException(string $message): \Exception;
+    abstract protected function getException($message);
 }

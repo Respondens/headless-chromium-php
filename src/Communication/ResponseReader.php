@@ -56,7 +56,7 @@ class ResponseReader
      * the message to get a response for
      * @return Message
      */
-    public function getMessage(): Message
+    public function getMessage()
     {
         return $this->message;
     }
@@ -65,7 +65,7 @@ class ResponseReader
      * The connection to check messages for
      * @return Connection
      */
-    public function getConnection(): Connection
+    public function getConnection()
     {
         return $this->connection;
     }
@@ -79,7 +79,7 @@ class ResponseReader
      * @return Response
      * @throws NoResponseAvailable
      */
-    public function getResponse(): Response
+    public function getResponse()
     {
         if (!$this->response) {
             throw new NoResponseAvailable('Response is not available. Try to use the method waitForResponse instead.');
@@ -96,14 +96,14 @@ class ResponseReader
      * @throws NoResponseAvailable
      * @throws OperationTimedOut
      */
-    public function waitForResponse(int $timeout = null): Response
+    public function waitForResponse($timeout = null)
     {
         if ($this->hasResponse()) {
             return $this->getResponse();
         }
 
         // default 2000ms
-        $timeout = $timeout ?? 2000;
+        $timeout = isset($timeout) ? $timeout : 2000;
 
         return Utils::tryWithTimeout($timeout * 1000, $this->waitForResponseGenerator());
     }

@@ -73,7 +73,7 @@ class PageNavigation
      * @throws Exception\CommunicationException\CannotReadResponse
      * @throws Exception\CommunicationException\InvalidResponse
      */
-    public function __construct(Page $page, string $url, bool $strict = false)
+    public function __construct(Page $page, $url, $strict = false)
     {
 
         // make sure latest loaderId was pulled
@@ -120,7 +120,7 @@ class PageNavigation
      * @throws NavigationExpired
      * @throws ResponseHasError
      */
-    public function waitForNavigation($eventName = Page::LOAD, int $timeout = null)
+    public function waitForNavigation($eventName = Page::LOAD, $timeout = null)
     {
         if (null === $timeout) {
             $timeout = 30000;

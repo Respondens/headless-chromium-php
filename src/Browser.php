@@ -82,7 +82,7 @@ class Browser
     /**
      * @return Connection
      */
-    public function getConnection(): Connection
+    public function getConnection()
     {
         return $this->connection;
     }
@@ -93,7 +93,7 @@ class Browser
      *
      * @param string|null $script
      */
-    public function setPagePreScript(string $script = null)
+    public function setPagePreScript($script = null)
     {
         $this->pagePreScript = $script;
     }
@@ -129,7 +129,7 @@ class Browser
      * @throws OperationTimedOut
      * @return Page
      */
-    public function createPage(): Page
+    public function createPage()
     {
 
         // page url

@@ -52,28 +52,32 @@ class Utils
     {
         $waitUntilMicroSec = microtime(true) * 1000 * 1000 + $timeoutMicroSec;
 
-        foreach ($generator as $v) {
-            // if timeout reached or if time+delay exceed timeout stop the execution
-            if (microtime(true) * 1000 * 1000 + $v >= $waitUntilMicroSec) {
-                if ($onTimeout) {
-                    // if callback was set execute it
-                    return $onTimeout();
-                } else {
-                    if ($timeoutMicroSec > 1000 * 1000) {
-                        $timeoutPhrase = (int)($timeoutMicroSec / (1000 * 1000)) . 'sec';
-                    } elseif ($timeoutMicroSec > 1000) {
-                        $timeoutPhrase = (int)($timeoutMicroSec / 1000) . 'ms';
+        foreach ($generator as $k => $v) {
+            if ($k === 0) {
+                // if timeout reached or if time+delay exceed timeout stop the execution
+                if (microtime(true) * 1000 * 1000 + (is_int($generator) ? $generator : 0) >= $waitUntilMicroSec) {
+                    if ($onTimeout) {
+                        // if callback was set execute it
+                        return $onTimeout();
                     } else {
-                        $timeoutPhrase = (int)($timeoutMicroSec) . 'μs';
+                        if ($timeoutMicroSec > 1000 * 1000) {
+                            $timeoutPhrase = (int)($timeoutMicroSec / (1000 * 1000)) . 'sec';
+                        } elseif ($timeoutMicroSec > 1000) {
+                            $timeoutPhrase = (int)($timeoutMicroSec / 1000) . 'ms';
+                        } else {
+                            $timeoutPhrase = (int)($timeoutMicroSec) . 'μs';
+                        }
+                        throw new OperationTimedOut('Operation timed out (' . $timeoutPhrase . ')');
                     }
-                    throw new OperationTimedOut('Operation timed out (' . $timeoutPhrase . ')');
+                }
+
+                usleep($v);
+            } else {
+                if ($generator instanceof \Generator) {
+                    return $generator->current();
                 }
             }
-
-            usleep($v);
         }
-
-        return $generator->getReturn();
     }
 
     /**

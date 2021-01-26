@@ -226,7 +226,7 @@ class BrowserProcess implements LoggerAwareInterface
                     // wait for process to close
                     $generator = function (Process $process) {
                         while ($process->isRunning()) {
-                            (yield 2 * 1000); // wait for 2ms
+                            (yield 0 => 2 * 1000); // wait for 2ms
                         }
                     };
                     $timeout = 8 * 1000 * 1000; // 8 seconds
@@ -374,8 +374,8 @@ class BrowserProcess implements LoggerAwareInterface
         // log
         $this->logger->debug('process: waiting for ' . $timeout / 1000000 . ' seconds for startup');
 
-        try {
-            $generator = function (Process $process) {
+        #try {
+        #    $generator = function (Process $process) {
                 while (true) {
                     if (!$process->isRunning()) {
                         // log
@@ -419,13 +419,14 @@ class BrowserProcess implements LoggerAwareInterface
                     }
 
                     // wait for 10ms
-                    (yield 10 * 1000);
+                    usleep(10 * 1000);
+                    #(yield 10 * 1000);
                 }
-            };
-            return Utils::tryWithTimeout($timeout, $generator($process));
-        } catch (OperationTimedOut $e) {
-            throw new \RuntimeException('Cannot start browser', 0, $e);
-        }
+        #    };
+        #    return Utils::tryWithTimeout($timeout, $generator($process));
+        #} catch (OperationTimedOut $e) {
+        #    throw new \RuntimeException('Cannot start browser', 0, $e);
+        #}
     }
 
     /**

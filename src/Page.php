@@ -372,18 +372,21 @@ class Page
             // make sure that the current loader is the good one
             if ($this->frameManager->getMainFrame()->getLatestLoaderId() !== $loaderId) {
                 if ($this->hasLifecycleEvent($eventName)) {
-                    return true;
+                    break;
+                    #return true;
                 }
 
-                yield $delay;
+                yield 0 => $delay;
 
                 // else if frame has still the previous loader, wait for the new one
             } else {
-                yield $delay;
+                yield 0 => $delay;
             }
 
             $this->getSession()->getConnection()->readData();
         }
+
+        yield 1 => true;
     }
 
     /**

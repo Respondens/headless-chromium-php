@@ -125,12 +125,15 @@ class ResponseReader
 
             // if found return it
             if ($hasResponse) {
-                return $this->getResponse();
+                break;
+                #return $this->getResponse();
             }
 
             // wait before next check
-            yield $tryDelay;
+            yield 0 => $tryDelay;
         }
+
+        yield 1 => $this->getResponse();
     }
 
     /**

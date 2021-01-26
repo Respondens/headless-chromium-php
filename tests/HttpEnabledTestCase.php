@@ -18,7 +18,7 @@ class HttpEnabledTestCase extends BaseTestCase
     /** @var Process */
     private static $process;
 
-    public static function setUpBeforeClass(): void
+    public static function setUpBeforeClass()
     {
         parent::setUpBeforeClass();
 
@@ -39,7 +39,7 @@ class HttpEnabledTestCase extends BaseTestCase
         }
     }
 
-    public static function tearDownAfterClass(): void
+    public static function tearDownAfterClass()
     {
         parent::tearDownAfterClass();
 
@@ -51,7 +51,7 @@ class HttpEnabledTestCase extends BaseTestCase
         return 'localhost:8083';
     }
 
-    protected static function sitePath(string $file): string
+    protected static function sitePath($file)
     {
         return 'http://localhost:8083/' . $file;
     }

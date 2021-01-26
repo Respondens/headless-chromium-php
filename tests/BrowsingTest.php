@@ -25,14 +25,14 @@ class BrowsingTest extends BaseTestCase
      */
     public static $browser;
 
-    public static function setUpBeforeClass(): void
+    public static function setUpBeforeClass()
     {
         parent::setUpBeforeClass();
         $factory = new BrowserFactory();
         self::$browser = $factory->createBrowser();
     }
 
-    public static function tearDownAfterClass(): void
+    public static function tearDownAfterClass()
     {
         parent::tearDownAfterClass();
         self::$browser->close();

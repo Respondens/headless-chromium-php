@@ -48,7 +48,7 @@ class Message
      * @param string $method
      * @param array $params
      */
-    public function __construct(string $method, array $params = [])
+    public function __construct($method, array $params = [])
     {
         $this->id = ++self::$messageId;
         $this->method = $method;
@@ -58,7 +58,7 @@ class Message
     /**
      * @return int
      */
-    public function getId(): int
+    public function getId()
     {
         return $this->id;
     }
@@ -66,7 +66,7 @@ class Message
     /**
      * @return string
      */
-    public function getMethod(): string
+    public function getMethod()
     {
         return $this->method;
     }
@@ -74,7 +74,7 @@ class Message
     /**
      * @return array
      */
-    public function getParams(): array
+    public function getParams()
     {
         return $this->params;
     }
@@ -82,7 +82,7 @@ class Message
     /**
      * @inheritdoc
      */
-    public function __toString(): string
+    public function __toString()
     {
         return json_encode([
             'id'        => $this->getId(),

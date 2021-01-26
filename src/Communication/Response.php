@@ -39,7 +39,7 @@ class Response implements \ArrayAccess
      * Get the error message if set.
      * @return string|null
      */
-    public function getErrorMessage(bool $extended = true)
+    public function getErrorMessage($extended = true)
     {
         $message = [];
 
@@ -64,7 +64,7 @@ class Response implements \ArrayAccess
      */
     public function getErrorCode()
     {
-        return $this->data['error']['code'] ?? null;
+        return isset($this->data['error']['code']) ? $this->data['error']['code'] : null;
     }
 
     /**
@@ -73,13 +73,13 @@ class Response implements \ArrayAccess
      */
     public function getResultData($name)
     {
-        return $this->data['result'][$name] ?? null;
+        return isset($this->data['result'][$name]) ? $this->data['result'][$name] : null;
     }
 
     /**
      * @return Message
      */
-    public function getMessage(): Message
+    public function getMessage()
     {
         return $this->message;
     }
@@ -88,7 +88,7 @@ class Response implements \ArrayAccess
      * The data returned by chrome dev tools
      * @return array
      */
-    public function getData(): array
+    public function getData()
     {
         return $this->data;
     }

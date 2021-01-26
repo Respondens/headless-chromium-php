@@ -44,7 +44,7 @@ class Session extends EventEmitter
      * @param string $sessionId
      * @param Connection $connection
      */
-    public function __construct(string $targetId, string $sessionId, Connection $connection)
+    public function __construct($targetId, $sessionId, Connection $connection)
     {
         $this->sessionId  = $sessionId;
         $this->targetId   = $targetId;
@@ -56,7 +56,7 @@ class Session extends EventEmitter
      * @return SessionResponseReader
      * @throws CommunicationException
      */
-    public function sendMessage(Message $message): SessionResponseReader
+    public function sendMessage(Message $message)
     {
         if ($this->destroyed) {
             throw new TargetDestroyed('The session was destroyed.');
@@ -77,11 +77,11 @@ class Session extends EventEmitter
      * @throws NoResponseAvailable
      * @throws CommunicationException
      */
-    public function sendMessageSync(Message $message, int $timeout = null): Response
+    public function sendMessageSync(Message $message, $timeout = null)
     {
         $responseReader = $this->sendMessage($message);
 
-        $response = $responseReader->waitForResponse($timeout ?? $this->getConnection()->getSendSyncDefaultTimeout());
+        $response = $responseReader->waitForResponse(isset($timeout) ? $timeout : $this->getConnection()->getSendSyncDefaultTimeout());
 
         if (!$response) {
             throw new NoResponseAvailable('No response was sent in the given timeout');

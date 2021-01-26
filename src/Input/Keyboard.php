@@ -41,7 +41,7 @@ class Keyboard
      * @throws \HeadlessChromium\Exception\CommunicationException
      * @throws \HeadlessChromium\Exception\NoResponseAvailable
      */
-    public function typeText(string $text)
+    public function typeText($text)
     {
         $this->page->assertNotClosed();
 
@@ -78,7 +78,7 @@ class Keyboard
      * @throws \HeadlessChromium\Exception\CommunicationException
      * @throws \HeadlessChromium\Exception\NoResponseAvailable
      */
-    public function typeRawKey(string $key)
+    public function typeRawKey($key)
     {
         $this->page->assertNotClosed();
 
@@ -99,7 +99,7 @@ class Keyboard
      *
      * @return $this
      */
-    public function setKeyInterval(int $milliseconds)
+    public function setKeyInterval($milliseconds)
     {
         if ($milliseconds < 0) {
             $milliseconds = 0;

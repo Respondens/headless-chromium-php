@@ -47,7 +47,7 @@ class Target
     /**
      * @return Session
      */
-    public function getSession(): Session
+    public function getSession()
     {
         if ($this->destroyed) {
             throw new TargetDestroyed('The target was destroyed.');
@@ -82,7 +82,7 @@ class Target
     /**
      * @return bool
      */
-    public function isDestroyed(): bool
+    public function isDestroyed()
     {
         return $this->destroyed;
     }
@@ -94,7 +94,7 @@ class Target
      */
     public function getTargetInfo($infoName)
     {
-        return $this->targetInfo[$infoName] ?? null;
+        return isset($this->targetInfo[$infoName]) ? $this->targetInfo[$infoName] : null;
     }
 
     /**

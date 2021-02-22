@@ -16,10 +16,10 @@ use HeadlessChromium\Page;
 
 class Mouse
 {
-    public const BUTTON_LEFT = 'left';
-    public const BUTTON_NONE = 'none';
-    public const BUTTON_RIGHT = 'right';
-    public const BUTTON_MIDDLE = 'middle';
+    const BUTTON_LEFT = 'left';
+    const BUTTON_NONE = 'none';
+    const BUTTON_RIGHT = 'right';
+    const BUTTON_MIDDLE = 'middle';
 
     /**
      * @var Page
@@ -47,7 +47,7 @@ class Mouse
      * @throws \HeadlessChromium\Exception\CommunicationException
      * @throws \HeadlessChromium\Exception\NoResponseAvailable
      */
-    public function move(int $x, int $y, array $options = null)
+    public function move($x, $y, array $options = null)
     {
         $this->page->assertNotClosed();
 
@@ -60,7 +60,7 @@ class Mouse
         $this->y = $y;
 
         // number of steps to achieve the move
-        $steps = $options['steps'] ?? 1;
+        $steps = isset($options['steps']) ? $options['steps'] : 1;
         if ($steps <= 0) {
             throw new \InvalidArgumentException('options "steps" for mouse move must be a positive integer');
         }
@@ -88,7 +88,7 @@ class Mouse
             'x' => $this->x,
             'y' => $this->y,
             'type' => 'mousePressed',
-            'button' => $options['button'] ?? self::BUTTON_LEFT,
+            'button' => isset($options['button']) ? $options['button'] : self::BUTTON_LEFT,
             'clickCount' => 1
         ]));
 
@@ -106,7 +106,7 @@ class Mouse
             'x' => $this->x,
             'y' => $this->y,
             'type' => 'mouseReleased',
-            'button' => $options['button'] ?? self::BUTTON_LEFT,
+            'button' => isset($options['button']) ? $options['button'] : self::BUTTON_LEFT,
             'clickCount' => 1
         ]));
 

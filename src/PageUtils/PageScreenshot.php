@@ -19,7 +19,7 @@ class PageScreenshot extends AbstractBinaryInput
      * @inheritdoc
      * @internal
      */
-    protected function getException(string $message): \Exception
+    protected function getException($message)
     {
         return new ScreenshotFailed(
             sprintf('Cannot make a screenshot. Reason : %s', $message)

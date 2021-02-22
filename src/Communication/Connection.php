@@ -29,9 +29,9 @@ class Connection extends EventEmitter implements LoggerAwareInterface
 {
     use LoggerAwareTrait;
 
-    public const EVENT_TARGET_CREATED = 'method:Target.targetCreated';
-    public const EVENT_TARGET_INFO_CHANGED = 'method:Target.targetInfoChanged';
-    public const EVENT_TARGET_DESTROYED = 'method:Target.targetDestroyed';
+    const EVENT_TARGET_CREATED = 'method:Target.targetCreated';
+    const EVENT_TARGET_INFO_CHANGED = 'method:Target.targetInfoChanged';
+    const EVENT_TARGET_DESTROYED = 'method:Target.targetDestroyed';
 
     /**
      * When strict mode is enabled communication error will result in exceptions
@@ -85,13 +85,13 @@ class Connection extends EventEmitter implements LoggerAwareInterface
      * @param SocketInterface|string $socketClient
      * @param int|null $sendSyncDefaultTimeout
      */
-    public function __construct($socketClient, LoggerInterface $logger = null, int $sendSyncDefaultTimeout = null)
+    public function __construct($socketClient, LoggerInterface $logger = null, $sendSyncDefaultTimeout = null)
     {
         // set or create logger
-        $this->setLogger($logger ?? new NullLogger());
+        $this->setLogger(isset($logger) ? $logger : new NullLogger());
 
         // set timeout
-        $this->sendSyncDefaultTimeout = $sendSyncDefaultTimeout ?? 5000;
+        $this->sendSyncDefaultTimeout = isset($sendSyncDefaultTimeout) ? $sendSyncDefaultTimeout : 5000;
 
         // create socket client
         if (is_string($socketClient)) {
@@ -108,7 +108,7 @@ class Connection extends EventEmitter implements LoggerAwareInterface
     /**
      * @return LoggerInterface
      */
-    public function getLogger(): LoggerInterface
+    public function getLogger()
     {
         return $this->logger;
     }
@@ -117,7 +117,7 @@ class Connection extends EventEmitter implements LoggerAwareInterface
      * Set the delay to apply everytime before data are sent
      * @param int $delay
      */
-    public function setConnectionDelay(int $delay)
+    public function setConnectionDelay($delay)
     {
         $this->delay = $delay;
     }
@@ -126,7 +126,7 @@ class Connection extends EventEmitter implements LoggerAwareInterface
      * Gets the default timeout used when sending a message synchronously
      * @return int
      */
-    public function getSendSyncDefaultTimeout(): int
+    public function getSendSyncDefaultTimeout()
     {
         return $this->sendSyncDefaultTimeout;
     }
@@ -134,7 +134,7 @@ class Connection extends EventEmitter implements LoggerAwareInterface
     /**
      * @return bool
      */
-    public function isStrict(): bool
+    public function isStrict()
     {
         return $this->strict;
     }
@@ -142,7 +142,7 @@ class Connection extends EventEmitter implements LoggerAwareInterface
     /**
      * @param bool $strict
      */
-    public function setStrict(bool $strict)
+    public function setStrict($strict)
     {
         $this->strict = $strict;
     }
@@ -197,7 +197,7 @@ class Connection extends EventEmitter implements LoggerAwareInterface
      * @throws CommunicationException
      * @return ResponseReader
      */
-    public function sendMessage(Message $message): ResponseReader
+    public function sendMessage(Message $message)
     {
 
         // if delay enabled wait before sending message
@@ -228,10 +228,10 @@ class Connection extends EventEmitter implements LoggerAwareInterface
      * @throws OperationTimedOut
      * @return Response
      */
-    public function sendMessageSync(Message $message, int $timeout = null): Response
+    public function sendMessageSync(Message $message, $timeout = null)
     {
         $responseReader = $this->sendMessage($message);
-        $response = $responseReader->waitForResponse($timeout ?? $this->sendSyncDefaultTimeout);
+        $response = $responseReader->waitForResponse(isset($timeout) ? $timeout : $this->sendSyncDefaultTimeout);
 
         return $response;
     }
@@ -241,7 +241,7 @@ class Connection extends EventEmitter implements LoggerAwareInterface
      * @param string $targetId
      * @return Session
      */
-    public function createSession($targetId): Session
+    public function createSession($targetId)
     {
         $response = $this->sendMessageSync(
             new Message('Target.attachToTarget', ['targetId' => $targetId])
@@ -310,7 +310,7 @@ class Connection extends EventEmitter implements LoggerAwareInterface
      * @throws InvalidResponse
      * @internal
      */
-    private function dispatchMessage(string $message, Session $session = null)
+    private function dispatchMessage($message, Session $session = null)
     {
 
         // responses come as json string

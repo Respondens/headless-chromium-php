@@ -31,7 +31,7 @@ class ConnectionTest extends TestCase
      */
     protected $mocSocket;
 
-    public function setUp(): void
+    public function setUp()
     {
         parent::setUp();
         $this->mocSocket = new MockSocket();

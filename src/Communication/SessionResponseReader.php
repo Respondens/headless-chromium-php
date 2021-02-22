@@ -45,7 +45,7 @@ class SessionResponseReader extends ResponseReader
     /**
      * @return ResponseReader
      */
-    public function getTopResponseReader(): ResponseReader
+    public function getTopResponseReader()
     {
         return $this->topResponseReader;
     }

@@ -26,7 +26,7 @@ class PageLayoutMetrics extends ResponseWaiter
      * @throws \HeadlessChromium\Exception\NoResponseAvailable
      * @throws \HeadlessChromium\Exception\OperationTimedOut
      */
-    public function getMetrics(): array
+    public function getMetrics()
     {
         $response = $this->awaitResponse();
         return $response->getData()['results'];
@@ -39,7 +39,7 @@ class PageLayoutMetrics extends ResponseWaiter
      * @throws \HeadlessChromium\Exception\NoResponseAvailable
      * @throws \HeadlessChromium\Exception\OperationTimedOut
      */
-    public function getContentSize(): array
+    public function getContentSize()
     {
         $response = $this->awaitResponse();
         return $response->getResultData('contentSize');
@@ -52,7 +52,7 @@ class PageLayoutMetrics extends ResponseWaiter
      * @throws \HeadlessChromium\Exception\NoResponseAvailable
      * @throws \HeadlessChromium\Exception\OperationTimedOut
      */
-    public function getLayoutViewport(): array
+    public function getLayoutViewport()
     {
         $response = $this->awaitResponse();
         return $response->getResultData('layoutViewport');
